@@ -1,0 +1,154 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "com.mjbarrerab.mymovies"
+        minSdkVersion 19
+        targetSdkVersion 25
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$espresso_version") {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-v7'
+        exclude group: 'com.android.support', module: 'design'
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
+
+    // include espresso-intents
+    androidTestCompile("com.android.support.test.espresso:espresso-intents:$espresso_version") {
+        // Necessary if your app targets Marshmallow (since the test runner
+        // hasn't moved to Marshmallow yet)
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile("com.android.support.test:runner:$android_test_runner_version") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    androidTestCompile("com.android.support.test:rules:$android_test_runner_version") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    // Optional -- Mockito framework
+    androidTestCompile "org.mockito:mockito-android:$mockito_version"
+    testCompile "org.mockito:mockito-android:$mockito_version"
+
+    //noinspection GradleCompatible
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    // Required -- JUnit 4 framework
+    testCompile "junit:junit:$junit_version"
+
+    testCompile "org.robolectric:robolectric:$robolectric_version"
+
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support.constraint:constraint-layout:$constraint_layout"
+    compile "com.android.support:support-annotations:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
+    compile "com.android.support:cardview-v7:$support_version"
+    compile "com.android.support:design:$support_version"
+
+    //Dagger2
+    compile "com.google.dagger:dagger:$dagger_version"
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    def daggerCompiler = "com.google.dagger:dagger-compiler:$dagger_version"
+    annotationProcessor daggerCompiler
+
+    //ButterKnife
+    compile "com.jakewharton:butterknife:$butter_knife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
+
+    //Reactive
+    compile "io.reactivex:rxandroid:$reactive_android_version"
+    compile "io.reactivex:rxjava:$reactive_java_version"
+
+    //RXBinding
+    compile "com.jakewharton.rxbinding:rxbinding:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-design:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-leanback-v17:$rx_binding_version"
+
+    //Retrofit
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    compile "com.squareup.okhttp3:logging-interceptor:+"
+
+    //Picasso
+    compile "com.squareup.picasso:picasso:$picasso_version"
+
+    //Timber
+    compile "com.jakewharton.timber:timber:$timber_version"
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+    //SQLite - ROOM
+    // for Lifecycles, LiveData, and ViewModel, add:
+    compile "android.arch.lifecycle:runtime:1.0.0-alpha3"
+    compile "android.arch.lifecycle:extensions:1.0.0-alpha3"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha3"
+
+    // for Room, add:
+    compile "android.arch.persistence.room:runtime:1.0.0-alpha3"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha3"
+
+    // for Room RxJava support, add:
+    compile "android.arch.persistence.room:rxjava2:1.0.0-alpha3"
+
+    compile 'com.android.support:multidex:1.0.1'
+
+    //Oblique
+    compile 'com.fxn769:oblique:2.0'
+
+    //calligraphy
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+}
